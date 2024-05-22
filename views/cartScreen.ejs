@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Scatch Premium Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+    <div class="max-w-2xl mx-auto p-4">
+        <!-- Header -->
+        <div class="flex justify-between items-center border-b-2 border-gray-300 pb-4 mb-4">
+            <h1 class="text-4xl font-semibold lg:ml-10">Cart.</h1>
+            <nav class="space-x-4 lg:mr-10">
+                <a href="/dashboard" class="hover:underline">Home</a>
+                <a href="#" class="hover:underline">Products</a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <% if (userCart.cart.length===0) { %>
+            <p class="text-center text-gray-500">Cart is empty</p>
+            <% } else { %>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Product Details -->
+                    <div class="bg-white p-6 shadow-lg">
+                        <% userCart.cart.forEach(product=> { %>
+                            <div class="flex flex-col items-center mb-6">
+                                <img src="../images/<%= product.image %>" alt="Product Image"
+                                    class="w-[10vw] h-auto max-w-sm object-cover mb-4">
+                                <h2 class="text-2xl font-semibold mb-2">
+                                    <%= product.name %>
+                                </h2>
+                                <div class="flex items-center mb-4">
+                                    <button class="bg-gray-300 px-2 py-1 rounded-l">-</button>
+                                    <input type="text" value="<%= product.quantity %>"
+                                        class="w-12 text-center border-t border-b border-gray-300">
+                                    <button class="bg-gray-300 px-2 py-1 rounded-r">+</button>
+                                </div>
+                                <p class="text-lg font-semibold">Net Total ₹<%= product.price %>
+                                </p>
+                            </div>
+                            <% }); %>
+                    </div>
+
+                    <!-- Price Breakdown -->
+                    <div class="bg-white p-6 shadow-lg">
+                        <h2 class="text-xl font-semibold mb-4">Price Breakdown</h2>
+                        <div class="space-y-2">
+                            <% userCart.cart.forEach(product=> { %>
+                                <div class="flex justify-between">
+                                    <span>Total MRP</span>
+                                    <span>₹<%= product.price %></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Discount on MRP</span>
+                                    <span>₹<%= product.discount %></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Platform Fee</span>
+                                    <span>₹20</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Shipping Fee</span>
+                                    <span>FREE</span>
+                                </div>
+                                <hr class="my-4">
+                                <div class="flex justify-between font-semibold">
+                                    <span>Total Amount</span>
+                                    <span class="text-green-500">₹<%= product.price %></span>
+                                </div>
+                                <a href="/dashboard/cart/order/<%= product._id %>"
+                                    class="w-full my-4 bg-black text-white py-2 rounded inline-block text-center">Place
+                                    Order</a>
+                                <% }); %>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+    </div>
+</body>
+
+</html>

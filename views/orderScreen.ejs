@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scatch - Premium Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="max-w-2xl mx-auto p-4">
+        <!-- Header -->
+        <div class="flex justify-between items-center border-b-2 border-gray-300 pb-4 mb-4">
+            <h1 class="text-4xl font-semibold lg:ml-10">Scatch.</h1>
+            <nav class="space-x-4 lg:mr-10">
+                <a href="/dashboard" class="hover:underline">Home</a>
+                <a href="#" class="hover:underline">Products</a>
+            </nav>
+        </div>
+        <!-- Main Content -->
+        <% if (userOrder.orders.length===0) { %>
+            <p class="text-center text-gray-500">No order history found</p>
+            <% } else { %>
+                <h1 class="text-xl font-semibold mb-4">Orders History</h1>
+                <% userOrder.orders.forEach(product=> { %>
+                    <div class="bg-white shadow p-4 mb-4">
+                        <div class="flex items-center space-x-4">
+                            <img src="../images/<%= product.image %>"
+                                alt="Men's Mesh Breathable Fashion Sneakers Running Shoes - Green"
+                                class="w-20 h-20 object-cover">
+                            <div class="flex-grow">
+                                <h2 class="text-lg font-semibold">
+                                    <%= product.name %>
+                                </h2>
+                                <p class="text-gray-500">Order ID: <%= product._id %>
+                                </p>
+                                <p class="mt-2 text-green-600 font-bold">Delivered</p>
+                                <p class="text-gray-500">On 14-12-2020</p>
+                            </div>
+                            <a href="#" class="text-blue-600 hover:underline">See Details</a>
+                        </div>
+                    </div>
+                    <% }); %>
+                        <% } %>
+    </div>
+
+</body>
+
+</html>

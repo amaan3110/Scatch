@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="max-w-2xl mx-auto p-4 sm:p-6">
+        <!-- Header -->
+        <div class="flex justify-between items-center border-b-2 border-gray-300 pb-4 mb-4">
+            <h1 class="text-4xl font-semibold lg:ml-10">Scatch.</h1>
+            <nav class="space-x-4 lg:mr-10">
+                <a href="/dashboard" class="hover:underline">Home</a>
+                <a href="/logout"
+                    class="bg-red-500 px-3 py-2 text-sm rounded-md text-white ml-6 hover:bg-red-700">Logout</a>
+            </nav>
+        </div>
+        <!-- Profile Section -->
+        <h1 class="text-2xl font-semibold mb-6">My Account</h1>
+        <div class="bg-white rounded-lg shadow p-4 sm:p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Profile Information</h2>
+            <div class="flex flex-col sm:flex-row items-center sm:space-x-6">
+                <img src="https://cdn.pixabay.com/photo/2023/09/01/07/18/ai-avatar-8226383_1280.png"
+                    alt="Profile Picture" class="w-24 h-24 rounded-full object-cover object-center mb-4 sm:mb-0">
+                <div class="container mx-auto p-4">
+                    <div class="p-4 border rounded-md mb-4">
+                        <p class="text-lg font-semibold">
+                            <%= userDetails.name %>
+                        </p>
+                        <p class="text-gray-500">
+                            <%= userDetails.email %>
+                        </p>
+                        <p class="text-gray-500">+123 456 7890</p>
+                        <p class="text-gray-500">123 Main Street, Springfield, USA</p>
+                        <a href="#" class="text-blue-600 hover:underline mt-4 block">Edit Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account Settings Section -->
+        <div class="bg-white rounded-lg shadow p-4 sm:p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Account Settings</h2>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-lg font-semibold">Change Password</h3>
+                    <a href="#" class="text-blue-600 hover:underline">Update Password</a>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold">Manage Addresses</h3>
+                    <a href="#" class="text-blue-600 hover:underline">Update Addresses</a>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold">Payment Methods</h3>
+                    <a href="#" class="text-blue-600 hover:underline">Manage Payment Methods</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

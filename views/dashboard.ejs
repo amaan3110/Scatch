@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scatch - Premium Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+    <div class="w-full min-h-screen">
+        <!----Header----->
+        <div class="w-full h-[11vh] p-4 flex justify-between items-center border-b-[1px] border-slate-500">
+            <div>
+                <h1 class="text-4xl tracking-tighter ml-4 md:ml-16 hover:cursor-pointer">Scatch.</h1>
+            </div>
+            <div class="hidden md:flex gap-6 mr-4 md:mr-8 items-center tracking-tight">
+                <a class="hover:underline" href="#">Home</a>
+                <a class="hover:underline" href="/dashboard/cart">Cart</a>
+                <a class="hover:underline" href="/dashboard/orderhistory">Order History</a>
+                <a class="hover:underline" href="/dashboard/useraccount">My Account</a>
+                <a href="/logout" title="<%= user.name %>"
+                    class="bg-red-500 px-3 py-2 text-sm rounded-md text-white ml-6 hover:bg-red-700">Logout</a>
+            </div>
+        </div>
+        <!----Mobile Menu----->
+        <div class="flex flex-col md:hidden p-4 border-b-[1px] border-slate-500">
+            <a href="#" class="py-2">Home</a>
+            <a href="/dashboard/cart" class="py-2">Cart</a>
+            <a href="/dashboard/orderhistory" class="py-2">Order History</a>
+            <a href="#" class="py-2">My Account</a>
+            <a href="/logout" title="<%= user.name %>"
+                class="w-fit bg-red-500 px-3 py-2 text-sm rounded-md text-white mt-2 hover:bg-red-700">Logout</a>
+        </div>
+        <!----Product List----->
+        <div class="flex flex-wrap gap-6 p-4">
+            <% products.forEach(product=> { %>
+                <div class="w-full sm:w-1/2 md:w-auto">
+                    <div class="w-full md:w-fit">
+                        <div
+                            class="w-full md:w-[13.2vw] h-[28vh] <%= product.bgcolor %> flex justify-center items-center overflow-hidden">
+                            <img src="../images/<%= product.image %>" alt="">
+                        </div>
+                        <div
+                            class="relative w-full md:w-[13.2vw] h-[13vh] <%= product.panelcolor %> py-6 px-5 tracking-tight">
+                            <h1 class="font-semibold <%= product.textcolor %>">
+                                <%= product.name %>
+                            </h1>
+                            <h1 class="font-semibold <%= product.textcolor %>">$ <%= product.price %>
+                            </h1>
+                            <a href="/addtocart/<%= product._id %>"
+                                class="absolute top-9 right-3 bg-white rounded-full inline-block w-7 h-7 flex justify-center items-center text-xl">+</a>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+        </div>
+    </div>
+</body>
+
+</html>
