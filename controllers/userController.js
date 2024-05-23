@@ -27,7 +27,15 @@ AddToCart = async (req, res) => {
     const user = await User.findOne({ email: req.user.email });
     user.cart.push(product._id);
     await user.save();
-    res.redirect('/dashboard');
+    res.redirect('/dashboard/cart');
+};
+
+RemoveFromCart = async (req, res) => {
+    const productId = req.params.id;
+    const user = await User.findOne({ email: req.user.email });
+    user.cart.pull(productId);
+    await user.save();
+    res.redirect('/dashboard/cart');
 };
 
 Orders = async (req, res) => {
@@ -39,4 +47,4 @@ Orders = async (req, res) => {
     res.redirect('/dashboard');
 };
 
-module.exports = { AddToCart, Orders, GetDashboard, GetCart, GetOrder, UserAccount }
+module.exports = { AddToCart, Orders, GetDashboard, GetCart, GetOrder, UserAccount, RemoveFromCart }

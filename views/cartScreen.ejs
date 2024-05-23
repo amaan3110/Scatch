@@ -27,23 +27,20 @@
                     <!-- Product Details -->
                     <div class="bg-white p-6 shadow-lg">
                         <% userCart.cart.forEach(product=> { %>
-                            <div class="flex flex-col items-center mb-6">
+                            <div class="relative flex flex-col items-center mb-6">
+                                <a href="/removefromcart/<%= product._id %>"
+                                    class="absolute right-[-5px] top-[-17px] text-xl">&times;</a>
                                 <img src="../images/<%= product.image %>" alt="Product Image"
-                                    class="w-[10vw] h-auto max-w-sm object-cover mb-4">
+                                    class="w-1/2 sm:w-[30vw] md:w-[20vw] lg:w-[15vw] xl:w-[10vw] h-auto max-w-sm object-cover mb-4">
                                 <h2 class="text-2xl font-semibold mb-2">
                                     <%= product.name %>
                                 </h2>
-                                <div class="flex items-center mb-4">
-                                    <button class="bg-gray-300 px-2 py-1 rounded-l">-</button>
-                                    <input type="text" value="<%= product.quantity %>"
-                                        class="w-12 text-center border-t border-b border-gray-300">
-                                    <button class="bg-gray-300 px-2 py-1 rounded-r">+</button>
-                                </div>
                                 <p class="text-lg font-semibold">Net Total ₹<%= product.price %>
                                 </p>
                             </div>
                             <% }); %>
                     </div>
+
 
                     <!-- Price Breakdown -->
                     <div class="bg-white p-6 shadow-lg">

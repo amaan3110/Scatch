@@ -17,7 +17,7 @@ const User = require('./models/user-model')
 const Product = require('./models/product-model');
 const { Register, Login, Logout } = require('./controllers/authController');
 const { AddProduct, DeleteProduct, GetProducts } = require('./controllers/productController');
-const { AddToCart, Orders, GetDashboard, GetCart, GetOrder, UserAccount } = require('./controllers/userController');
+const { AddToCart, Orders, GetDashboard, GetCart, GetOrder, UserAccount, RemoveFromCart } = require('./controllers/userController');
 const { isLoggedIn } = require('./middlewares/authMiddleware');
 
 app.set('view engine', 'ejs');
@@ -36,6 +36,7 @@ app.get("/dashboard", isLoggedIn, GetDashboard);
 app.get("/dashboard/cart", isLoggedIn, GetCart);
 app.get("/dashboard/orderhistory", isLoggedIn, GetOrder);
 app.get('/addtocart/:id', isLoggedIn, AddToCart);
+app.get("/removefromcart/:id", isLoggedIn, RemoveFromCart);
 app.get('/dashboard/cart/order/:id', isLoggedIn, Orders);
 app.get('/dashboard/useraccount', isLoggedIn, UserAccount)
 
