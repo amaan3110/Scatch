@@ -30,7 +30,7 @@ Login = async (req, res) => {
     }
 
     if (email == process.env.ADMIN_EMAIL && password == process.env.ADMIN_PASSWORD) {
-        const token = jwt.sign({ email: "admin@admin.in" }, process.env.JWT_KEY);
+        const token = jwt.sign({ email: process.env.ADMIN_EMAIL }, process.env.JWT_KEY);
         res.cookie('token', token);
         res.redirect('/admin');
         return;

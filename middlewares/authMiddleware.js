@@ -10,3 +10,11 @@ exports.isLoggedIn = (req, res, next) => {
     }
     next();
 };
+
+exports.isAdmin = (req, res, next) => {
+    const admin = jwt.verify(req.cookies.token, process.env.JWT_KEY);
+    if (admin.email != process.env.ADMIN_EMAIL) {
+        return res.status(401).send('You must be an admin');
+    }
+    next();
+};

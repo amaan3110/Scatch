@@ -18,7 +18,7 @@ const Product = require('./models/product-model');
 const { Register, Login, Logout } = require('./controllers/authController');
 const { AddProduct, DeleteProduct, GetProducts } = require('./controllers/productController');
 const { AddToCart, Orders, GetDashboard, GetCart, GetOrder, UserAccount, RemoveFromCart } = require('./controllers/userController');
-const { isLoggedIn } = require('./middlewares/authMiddleware');
+const { isLoggedIn, isAdmin } = require('./middlewares/authMiddleware');
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
@@ -43,7 +43,7 @@ app.get('/dashboard/useraccount', isLoggedIn, UserAccount)
 // product module routes
 
 app.post('/admin/addproduct', isLoggedIn, AddProduct);
-app.get('/admin', isLoggedIn, GetProducts);
+app.get('/admin', isLoggedIn, isAdmin, GetProducts);
 app.get('/delete/:id', isLoggedIn, DeleteProduct);
 
 // user module routes
@@ -53,5 +53,5 @@ app.post('/register', Register);
 app.get('/logout', Logout);
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
