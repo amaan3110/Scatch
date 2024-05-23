@@ -23,10 +23,10 @@
         <% if (userCart.cart.length===0) { %>
             <p class="text-center text-gray-500">Cart is empty</p>
             <% } else { %>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Product Details -->
-                    <div class="bg-white p-6 shadow-lg">
-                        <% userCart.cart.forEach(product=> { %>
+                <% userCart.cart.forEach(product=> { %>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Product Details -->
+                        <div class="bg-white p-6 shadow-lg">
                             <div class="relative flex flex-col items-center mb-6">
                                 <a href="/removefromcart/<%= product._id %>"
                                     class="absolute right-[-5px] top-[-17px] text-xl">&times;</a>
@@ -38,15 +38,12 @@
                                 <p class="text-lg font-semibold">Net Total ₹<%= product.price %>
                                 </p>
                             </div>
-                            <% }); %>
-                    </div>
-
-
-                    <!-- Price Breakdown -->
-                    <div class="bg-white p-6 shadow-lg">
-                        <h2 class="text-xl font-semibold mb-4">Price Breakdown</h2>
-                        <div class="space-y-2">
-                            <% userCart.cart.forEach(product=> { %>
+                            <hr>
+                        </div>
+                        <!-- Price Breakdown -->
+                        <div class="bg-white p-6 shadow-lg">
+                            <h2 class="text-xl font-semibold mb-4">Price Breakdown</h2>
+                            <div class="space-y-2">
                                 <div class="flex justify-between">
                                     <span>Total MRP</span>
                                     <span>₹<%= product.price %></span>
@@ -66,16 +63,18 @@
                                 <hr class="my-4">
                                 <div class="flex justify-between font-semibold">
                                     <span>Total Amount</span>
-                                    <span class="text-green-500">₹<%= product.price %></span>
+                                    <span class="text-green-500">
+                                        ₹<%= product.price - product.discount + 20 %>
+                                    </span>
                                 </div>
                                 <a href="/dashboard/cart/order/<%= product._id %>"
                                     class="w-full my-4 bg-black text-white py-2 rounded inline-block text-center">Place
                                     Order</a>
-                                <% }); %>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <% } %>
+                    <% }); %>
+                        <% } %>
     </div>
 </body>
 
