@@ -29,7 +29,7 @@ Login = async (req, res) => {
         return res.status(400).send("All fields are required.");
     }
 
-    if (email == 'admin@admin.in' && password == 'admin') {
+    if (email == process.env.ADMIN_EMAIL && password == process.env.ADMIN_PASSWORD) {
         const token = jwt.sign({ email: "admin@admin.in" }, process.env.JWT_KEY);
         res.cookie('token', token);
         res.redirect('/admin');
