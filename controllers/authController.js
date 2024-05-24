@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user-model');
+const { sendWelcomeEmail } = require('../services/email-service');
 
 Register = async (req, res) => {
     const { username, email, password } = req.body;
@@ -20,6 +21,7 @@ Register = async (req, res) => {
         email: email,
         password: hash
     });
+    await sendWelcomeEmail(email, username);
     res.redirect('/');
 };
 

@@ -18,7 +18,6 @@ const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
 
 
-
 // Middleware
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
