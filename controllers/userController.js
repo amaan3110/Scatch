@@ -1,5 +1,6 @@
 const User = require('../models/user-model');
 const Product = require('../models/product-model');
+const { sendConfirmationEmail } = require('../services/email-service');
 
 GetDashboard = async (req, res) => {
     const user = await User.findOne({ email: req.user.email });
@@ -44,6 +45,16 @@ ConfirmOrder = async (req, res) => {
     user.orders.push(product._id);
     user.cart.pull(product._id);
     await user.save();
+    const orderDetails = [
+        {
+            name: product.name,
+            quantity: 1,
+            price: product.price,
+            orderId: product._id
+        }
+    ];
+
+    await sendConfirmationEmail(user.email, user.name, orderDetails);
     res.redirect('/user');
 };
 

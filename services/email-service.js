@@ -45,4 +45,54 @@ Note: This is an automated email, please do not reply directly to this message.`
     }
 };
 
-module.exports = { sendWelcomeEmail };
+const sendConfirmationEmail = async (email, username, orderDetails) => {
+    const mailOptions = {
+        from: process.env.EMAIL_USER, // Replace with your email address
+        to: email,
+        subject: 'Scatch Order Confirmation - Your Order (#[orderNumber]) is Confirmed!',
+        text: `Dear ${username},
+  
+  This email confirms your recent order on Scatch (Order #[orderNumber]).
+  
+  Order Details:
+  * Items: ${orderDetails.map(item => `${item.name} (Quantity: ${item.quantity})`).join('\n')}
+  * Total: ${orderDetails.reduce((acc, item) => acc + item.price * item.quantity, 0)}
+  
+  Thank you for your order! We are excited to get your products to you as soon as possible.
+  
+  You can track your order status by visiting your account page on Scatch.
+  
+  If you have any questions, please do not hesitate to contact our support team at support@scatch.com.
+  
+  Best regards,
+  Team Scatch
+  
+  **Note:** This is an automated email, please do not reply directly to this message.`,
+        html: `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+          <p>Dear ${username},</p>
+          <p>This email confirms your recent order on <strong>Scatch</strong> (Order #[orderNumber]).</p>
+          <p>Order Details:</p>
+          <ul>
+            ${orderDetails.map(item => `<li>${item.name} (Quantity: ${item.quantity})</li>`).join('')}
+          </ul>
+          <p>Total: ${orderDetails.reduce((acc, item) => acc + item.price * item.quantity, 0)}</p>
+          <p>Thank you for your order! We are excited to get your products to you as soon as possible.</p>
+          <p>You can track your order status by visiting your account page on Scatch.</p>
+          <p>If you have any questions, please do not hesitate to contact our support team at <a href="mailto:support@scatch.com">support@scatch.com</a>.</p>
+          <p style="font-size: 0.9em; color: #555;">Note: This is an automated email, please do not reply directly to this message.</p>
+        </div>`
+    };
+
+    mailOptions.subject = mailOptions.subject.replace(/\[orderNumber\]/g, orderDetails[0].orderId || 'NA');
+    mailOptions.text = mailOptions.text.replace(/\[orderNumber\]/g, orderDetails[0].orderId || 'NA');
+    mailOptions.html = mailOptions.html.replace(/\[orderNumber\]/g, orderDetails[0].orderId || 'NA');
+    try {
+        await transporter.sendMail(mailOptions);
+        //console.log('Confirmation email sent successfully');
+    } catch (error) {
+        //console.error('Error sending confirmation email:', error);
+    }
+};
+
+module.exports = { sendWelcomeEmail, sendConfirmationEmail };
