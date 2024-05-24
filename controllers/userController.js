@@ -4,15 +4,15 @@ const Product = require('../models/product-model');
 GetDashboard = async (req, res) => {
     const user = await User.findOne({ email: req.user.email });
     const products = await Product.find();
-    res.render("dashboard", { user, products });
+    res.render("mainScreen", { user, products });
 };
 
-GetCart = async (req, res) => {
+UserCart = async (req, res) => {
     const userCart = await User.findOne({ email: req.user.email }).populate('cart');
     res.render("cartScreen", { userCart });
 };
 
-GetOrder = async (req, res) => {
+UserOrder = async (req, res) => {
     const userOrder = await User.findOne({ email: req.user.email }).populate('orders');
     res.render("orderScreen", { userOrder });
 }
@@ -27,7 +27,7 @@ AddToCart = async (req, res) => {
     const user = await User.findOne({ email: req.user.email });
     user.cart.push(product._id);
     await user.save();
-    res.redirect('/dashboard/cart');
+    res.redirect('/user/cart');
 };
 
 RemoveFromCart = async (req, res) => {
@@ -35,16 +35,16 @@ RemoveFromCart = async (req, res) => {
     const user = await User.findOne({ email: req.user.email });
     user.cart.pull(productId);
     await user.save();
-    res.redirect('/dashboard/cart');
+    res.redirect('/user/cart');
 };
 
-Orders = async (req, res) => {
+ConfirmOrder = async (req, res) => {
     const product = await Product.findById(req.params.id);
     const user = await User.findOne({ email: req.user.email });
     user.orders.push(product._id);
     user.cart.pull(product._id);
     await user.save();
-    res.redirect('/dashboard');
+    res.redirect('/user');
 };
 
-module.exports = { AddToCart, Orders, GetDashboard, GetCart, GetOrder, UserAccount, RemoveFromCart }
+module.exports = { AddToCart, ConfirmOrder, GetDashboard, UserCart, UserOrder, UserAccount, RemoveFromCart }

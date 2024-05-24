@@ -43,7 +43,7 @@ Login = async (req, res) => {
     if (result) {
         const token = jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_KEY);
         res.cookie('token', token);
-        res.redirect('/dashboard');
+        res.redirect('/user');
     } else {
         res.send('Incorrect password');
     }

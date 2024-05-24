@@ -14,7 +14,7 @@
         <div class="flex justify-between items-center border-b-2 border-gray-300 pb-4 mb-4">
             <h1 class="text-4xl font-semibold lg:ml-10">Cart.</h1>
             <nav class="space-x-4 lg:mr-10">
-                <a href="/dashboard" class="hover:underline">Home</a>
+                <a href="/user" class="hover:underline">Home</a>
                 <a href="#" class="hover:underline">Products</a>
             </nav>
         </div>
@@ -28,7 +28,7 @@
                         <!-- Product Details -->
                         <div class="bg-white p-6 shadow-lg">
                             <div class="relative flex flex-col items-center mb-6">
-                                <a href="/removefromcart/<%= product._id %>"
+                                <a href="removefromcart/<%= product._id %>"
                                     class="absolute right-[-5px] top-[-17px] text-xl">&times;</a>
                                 <img src="../images/<%= product.image %>" alt="Product Image"
                                     class="w-1/2 sm:w-[30vw] md:w-[20vw] lg:w-[15vw] xl:w-[10vw] h-auto max-w-sm object-cover mb-4">
@@ -67,7 +67,7 @@
                                         ₹<%= product.price - product.discount + 20 %>
                                     </span>
                                 </div>
-                                <a href="/dashboard/cart/order/<%= product._id %>"
+                                <a href="order/<%= product._id %>"
                                     class="w-full my-4 bg-black text-white py-2 rounded inline-block text-center">Place
                                     Order</a>
                             </div>
