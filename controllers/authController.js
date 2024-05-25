@@ -7,11 +7,11 @@ Register = async (req, res) => {
     const { username, email, password } = req.body;
     const userExist = await User.findOne({ email });
     if (userExist) {
-        req.flash('error', 'User already exists.');
+        req.flash('error', 'User already exists 😅');
         return res.redirect('/');
     }
     if (!username || !email || !password) {
-        req.flash('error', 'All fields are required.');
+        req.flash('error', 'All fields are required 😬');
         return res.redirect('/');
     }
 
@@ -24,14 +24,14 @@ Register = async (req, res) => {
         password: hash
     });
     await sendWelcomeEmail(email, username);
-    req.flash('success', 'Successfully registered.');
+    req.flash('success', 'Successfully registered 🥳');
     return res.redirect('/');
 };
 
 Login = async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
-        req.flash('error', 'All fields are required.');
+        req.flash('error', 'All fields are required 😬');
         return res.redirect('/');
     }
 
@@ -44,24 +44,24 @@ Login = async (req, res) => {
     }
     const user = await User.findOne({ email });
     if (!user) {
-        req.flash('error', 'User not found');
+        req.flash('error', 'User not found 🫣');
         return res.redirect('/');
     }
     const result = await bcrypt.compare(password, user.password);
     if (result) {
         const token = jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_KEY);
         res.cookie('token', token);
-        req.flash('success', 'Login successful!');
+        req.flash('success', 'Login successfully! 🎉');
         res.redirect('/user');
     } else {
-        req.flash('error', 'Incorrect password');
+        req.flash('error', 'Incorrect password 😶‍🌫️');
         res.redirect('/');
     }
 };
 
 Logout = (req, res) => {
     res.clearCookie('token');
-    req.flash('success', 'Logout successful!');
+    req.flash('success', 'See you again soon! 👋');
     res.redirect('/');
 };
 

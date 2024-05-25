@@ -30,7 +30,7 @@ AddToCart = async (req, res) => {
     const user = await User.findOne({ email: req.user.email });
     user.cart.push(product._id);
     await user.save();
-    req.flash('success', 'Product added to cart successfully');
+    req.flash('success', 'Product added to cart successfully 😇');
     res.redirect('/user/cart');
 };
 
@@ -39,6 +39,7 @@ RemoveFromCart = async (req, res) => {
     const user = await User.findOne({ email: req.user.email });
     user.cart.pull(productId);
     await user.save();
+    req.flash('error', 'Product removed from cart 😞');
     res.redirect('/user/cart');
 };
 
