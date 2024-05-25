@@ -12,7 +12,7 @@
     <div>
         <% if (messages.success) { %>
             <% messages.success.forEach(function(msg) { %>
-                <div class="fixed top-5 right-5 p-2 rounded z-50 bg-green-400 text-white text-sm">
+                <div class="message fixed top-5 right-5 p-2 rounded z-50 bg-green-400 text-white text-sm">
                     <%= msg %>
                 </div>
                 <% }); %>
@@ -20,12 +20,13 @@
 
                         <% if (messages.error) { %>
                             <% messages.error.forEach(function(msg) { %>
-                                <div class="fixed top-5 right-5 p-2 rounded z-50 bg-red-400 text-white text-sm">
+                                <div class="message fixed top-5 right-5 p-2 rounded z-50 bg-red-400 text-white text-sm">
                                     <%= msg %>
                                 </div>
                                 <% }); %>
                                     <% } %>
     </div>
+    <script src="../../javascript/toast.js"></script>
 
 </body>
 
