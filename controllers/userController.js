@@ -5,12 +5,14 @@ const { sendConfirmationEmail } = require('../services/email-service');
 GetDashboard = async (req, res) => {
     const user = await User.findOne({ email: req.user.email });
     const products = await Product.find();
-    res.render("mainScreen", { user, products });
+    const messages = req.flash();
+    res.render("mainScreen", { user, products, messages });
 };
 
 UserCart = async (req, res) => {
     const userCart = await User.findOne({ email: req.user.email }).populate('cart');
-    res.render("cartScreen", { userCart });
+    const messages = req.flash();
+    res.render("cartScreen", { userCart, messages });
 };
 
 UserOrder = async (req, res) => {
@@ -28,6 +30,7 @@ AddToCart = async (req, res) => {
     const user = await User.findOne({ email: req.user.email });
     user.cart.push(product._id);
     await user.save();
+    req.flash('success', 'Product added to cart successfully');
     res.redirect('/user/cart');
 };
 

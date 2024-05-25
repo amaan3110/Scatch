@@ -10,6 +10,9 @@
 </head>
 
 <body class="bg-gray-100">
+    <div id="toast-container">
+        <%- include('./partials/_toast.ejs', { messages }) %>
+    </div>
     <div class="w-full min-h-screen">
         <!----Header----->
         <div class="w-full h-[11vh] p-4 flex justify-between items-center border-b-[1px] border-slate-500">

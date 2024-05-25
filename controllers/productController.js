@@ -30,7 +30,8 @@ DeleteProduct = async (req, res) => {
 
 GetProducts = async (req, res) => {
     const products = await Product.find();
-    res.render("admin", { products });
+    const messages = req.flash();
+    res.render("admin", { products, messages });
 };
 
 
