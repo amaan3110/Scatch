@@ -8,6 +8,7 @@ This repository contains the code for an e-commerce website specializing in bags
 - Add, delete, and view products
 - Add products to cart and place orders
 - User dashboard to manage account, cart, and order history
+- Email notifications on successful registration and order confirmation
 
 ## Prerequisites
 
@@ -17,13 +18,17 @@ This repository contains the code for an e-commerce website specializing in bags
   - `PORT`: Port number for the server
   - `MONGO_URI`: MongoDB connection string
   - `JWT_SECRET`: Secret key for JWT
+  - `ADMIN_EMAIL`: Admin email address
+  - `ADMIN_PASSWORD`: Admin password
+  - `EMAIL_USER`: Email address for NodeMailer
+  - `EMAIL_PASS`: Your email password    
 
 ## Installation
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/ecommerce-bags.git
-    cd ecommerce-bags
+    git clone https://github.com/yourusername/Scatch.git
+    cd Scatch
     ```
 
 2. Install the dependencies:
@@ -36,6 +41,10 @@ This repository contains the code for an e-commerce website specializing in bags
     PORT=3000
     MONGO_URI=your_mongo_connection_string
     JWT_SECRET=your_jwt_secret
+    ADMIN_EMAIL=your_admin_email
+    ADMIN_PASSWORD=your_admin_password
+    EMAIL_USER=your_email_for_nodemailer
+    EMAIL_PASS=your_email_password
     ```
 
 4. Start the server:
@@ -52,6 +61,7 @@ This repository contains the code for an e-commerce website specializing in bags
 - `controllers/productController.js`: Handles adding, deleting, and fetching products
 - `controllers/userController.js`: Handles user dashboard, cart, and orders
 - `middlewares/authMiddleware.js`: Middleware to check if a user is logged in
+- `services/email-services.js`: Function to send email notifications
 - `public/`: Static files (CSS, JS, images)
 - `views/`: EJS templates for rendering HTML
 
@@ -79,5 +89,6 @@ This project is licensed under the MIT License.
 - MongoDB
 - JWT
 - EJS
+- NodeMailer
 
 Feel free to reach out if you have any questions or need further assistance!
