@@ -39,7 +39,7 @@ RemoveFromCart = async (req, res) => {
     const user = await User.findOne({ email: req.user.email });
     user.cart.pull(productId);
     await user.save();
-    req.flash('error', 'Product removed from cart 😞');
+    req.flash('error', 'Product removed from cart');
     res.redirect('/user/cart');
 };
 
@@ -59,6 +59,7 @@ ConfirmOrder = async (req, res) => {
     ];
 
     await sendConfirmationEmail(user.email, user.name, orderDetails);
+    req.flash('success', 'Your order has been placed successfully 🎁');
     res.redirect('/user');
 };
 

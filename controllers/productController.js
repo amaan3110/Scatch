@@ -15,6 +15,7 @@ AddProduct = async (req, res) => {
             panelcolor: panelcolor,
             textcolor: textcolor
         });
+        req.flash('success', 'Product added successfully');
         res.redirect("/admin");
     } catch (error) {
         console.error("Error creating product:", error);
@@ -25,6 +26,7 @@ AddProduct = async (req, res) => {
 DeleteProduct = async (req, res) => {
     const id = req.params.id;
     await Product.findByIdAndDelete(id);
+    req.flash('error', 'Product deleted successfully');
     res.redirect('/admin');
 };
 
