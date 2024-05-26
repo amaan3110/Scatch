@@ -1,26 +1,38 @@
 const Product = require('../models/product-model');
+const upload = require('../middlewares/multerConfig');
+const path = require('path');
 
 AddProduct = async (req, res) => {
-    try {
-        const { product, price, discount, bgcolor, panelcolor, textcolor } = req.body;
+    upload(req, res, async (err) => {
+        if (err) {
+            return res.status(400).send(err);
+        } else {
+            const { product, price, discount, bgcolor, panelcolor, textcolor } = req.body;
 
-        if (!product || !price || !discount || !bgcolor || !panelcolor || !textcolor) {
-            return res.status(400).send("All fields are required.");
+            if (!product || !price || !discount || !bgcolor || !panelcolor || !textcolor) {
+                return req.flash('error', 'All fields are required.');
+            }
+
+            const imagename = path.basename(req.file.filename);
+            try {
+                const details = await Product.create({
+                    name: product,
+                    price: price,
+                    discount: discount,
+                    bgcolor: bgcolor,
+                    panelcolor: panelcolor,
+                    textcolor: textcolor,
+                    image: imagename
+                });
+                //console.log(details);
+                req.flash('success', 'Product added successfully');
+                res.redirect("/admin");
+            } catch (error) {
+                console.error("Error creating product:", error);
+                res.status(500).send("An error occurred while creating the product.");
+            }
         }
-        const details = await Product.create({
-            name: product,
-            price: price,
-            discount: discount,
-            bgcolor: bgcolor,
-            panelcolor: panelcolor,
-            textcolor: textcolor
-        });
-        req.flash('success', 'Product added successfully');
-        res.redirect("/admin");
-    } catch (error) {
-        console.error("Error creating product:", error);
-        res.status(500).send("An error occurred while creating the product.");
-    }
+    });
 };
 
 DeleteProduct = async (req, res) => {

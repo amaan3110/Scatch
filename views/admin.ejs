@@ -47,7 +47,7 @@
                                     <h1 class="font-semibold <%= product.textcolor %>">
                                         <%= product.name %>
                                     </h1>
-                                    <h1 class="font-semibold <%= product.textcolor %>">$ <%= product.price %>
+                                    <h1 class="font-semibold <%= product.textcolor %>">₹ <%= product.price %>
                                     </h1>
                                     <a href="admin/delete/<%= product._id %>"
                                         class="absolute top-9 right-3 bg-white rounded-full inline-block w-7 h-7 flex justify-center items-center">
@@ -62,13 +62,13 @@
                 <!----Add Product----->
                 <div class="w-full h-fit lg:w-[40%] p-4 bg-white rounded-lg shadow-lg">
                     <h1 class="text-xl mb-3">Create New Product</h1>
-                    <form action="/admin/addproduct" method="post">
+                    <form action="/admin/addproduct" method="post" enctype="multipart/form-data">
                         <h1 class="mb-2 text-lg font-semibold">Product Details</h1>
                         <span>Product Image</span>
                         <label for="image"
                             class="mb-2 ml-2 inline-block bg-blue-500 px-3 py-2 rounded-full text-sm text-white hover:cursor-pointer">Select
                             File</label>
-                        <input type="file" class="hidden" id="image">
+                        <input type="file" class="hidden" id="image" name="image">
                         <br>
                         <input name="product" class="bg-slate-200 outline-none p-2 mb-2 w-full" type="text"
                             placeholder="Product Name"><br>
