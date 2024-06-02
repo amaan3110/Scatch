@@ -1,6 +1,8 @@
 const User = require('../models/user-model');
 const Product = require('../models/product-model');
 const { sendConfirmationEmail } = require('../services/email-service');
+const YOUR_DOMAIN = 'http://localhost:3000'
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 GetDashboard = async (req, res) => {
     const user = await User.findOne({ email: req.user.email });
@@ -63,4 +65,45 @@ ConfirmOrder = async (req, res) => {
     res.redirect('/user');
 };
 
-module.exports = { AddToCart, ConfirmOrder, GetDashboard, UserCart, UserOrder, UserAccount, RemoveFromCart }
+Checkout = async (req, res) => {
+    try {
+        const productId = req.body.productId;
+        if (!productId) {
+            return res.status(400).send('Product ID is missing');
+        }
+
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).send('Product not found');
+        }
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [
+                {
+                    price_data: {
+                        currency: 'inr',
+                        product_data: {
+                            name: product.name,
+                        },
+                        unit_amount: product.price * 100,
+                    },
+                    quantity: 1,
+                },
+            ],
+            mode: 'payment',
+            success_url: `${process.env.YOUR_DOMAIN}/user/payment/success`,
+            cancel_url: `${process.env.YOUR_DOMAIN}/user/cart`,
+        });
+
+        res.redirect(303, session.url);
+    } catch (error) {
+        console.error('Error creating Stripe session:', error);
+        if (error.type === 'StripeInvalidRequestError') {
+            console.error('StripeInvalidRequestError:', error.message);
+        }
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+module.exports = { AddToCart, ConfirmOrder, GetDashboard, UserCart, UserOrder, UserAccount, RemoveFromCart, Checkout }
