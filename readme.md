@@ -9,6 +9,7 @@ This repository contains the code for an e-commerce website specializing in bags
 - Add products to cart and place orders
 - User dashboard to manage account, cart, and order history
 - Email notifications on successful registration and order confirmation
+- Stripe payment gateway for seemless payment
 
 ## Prerequisites
 
@@ -21,7 +22,8 @@ This repository contains the code for an e-commerce website specializing in bags
   - `ADMIN_EMAIL`: Admin email address
   - `ADMIN_PASSWORD`: Admin password
   - `EMAIL_USER`: Email address for NodeMailer
-  - `EMAIL_PASS`: Your email password    
+  - `EMAIL_PASS`: Your email password
+  - `STRIPE_SECRET_KEY`: Stripe secret key
 
 ## Installation
 
@@ -45,6 +47,7 @@ This repository contains the code for an e-commerce website specializing in bags
     ADMIN_PASSWORD=your_admin_password
     EMAIL_USER=your_email_for_nodemailer
     EMAIL_PASS=your_email_password
+    STRIPE_SECRET_KEY=your_stripe_secret_key
     ```
 
 4. Start the server:
@@ -90,5 +93,6 @@ This project is licensed under the MIT License.
 - JWT
 - EJS
 - NodeMailer
+- Stripe
 
 Feel free to reach out if you have any questions or need further assistance!
