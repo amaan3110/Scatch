@@ -1,38 +1,37 @@
 const Product = require('../models/product-model');
-const upload = require('../middlewares/multerConfig');
+const cloudinary = require('../config/cloudinary');
 const path = require('path');
 
 AddProduct = async (req, res) => {
-    upload(req, res, async (err) => {
-        if (err) {
-            return res.status(400).send(err);
-        } else {
-            const { product, price, discount, bgcolor, panelcolor, textcolor } = req.body;
+    try {
+        const { product, price, discount, bgcolor, panelcolor, textcolor } = req.body;
 
-            if (!product || !price || !discount || !bgcolor || !panelcolor || !textcolor) {
-                return req.flash('error', 'All fields are required.');
-            }
-
-            const imagename = path.basename(req.file.filename);
-            try {
-                const details = await Product.create({
-                    name: product,
-                    price: price,
-                    discount: discount,
-                    bgcolor: bgcolor,
-                    panelcolor: panelcolor,
-                    textcolor: textcolor,
-                    image: imagename
-                });
-                //console.log(details);
-                req.flash('success', 'Product added successfully');
-                res.redirect("/admin");
-            } catch (error) {
-                console.error("Error creating product:", error);
-                res.status(500).send("An error occurred while creating the product.");
-            }
+        if (!product || !price || !discount || !bgcolor || !panelcolor || !textcolor) {
+            return req.flash('error', 'All fields are required.');
         }
-    });
+
+        if (!req.file) {
+            return req.flash('error', 'Image is required.');
+        }
+
+        const result = await cloudinary.uploader.upload(req.file.path);
+        const details = await Product.create({
+            name: product,
+            price: price,
+            discount: discount,
+            bgcolor: bgcolor,
+            panelcolor: panelcolor,
+            textcolor: textcolor,
+            image: result.secure_url // URL of the uploaded image from Cloudinary
+        });
+        console.log(details);
+        req.flash('success', 'Product added successfully');
+        res.redirect("/admin");
+
+    } catch (error) {
+        console.error("Error creating product:", error);
+        res.status(500).send("An error occurred while creating the product.");
+    }
 };
 
 DeleteProduct = async (req, res) => {
