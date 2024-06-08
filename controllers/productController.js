@@ -24,7 +24,6 @@ AddProduct = async (req, res) => {
             textcolor: textcolor,
             image: result.secure_url // URL of the uploaded image from Cloudinary
         });
-        console.log(details);
         req.flash('success', 'Product added successfully');
         res.redirect("/admin");
 
@@ -35,16 +34,28 @@ AddProduct = async (req, res) => {
 };
 
 DeleteProduct = async (req, res) => {
-    const id = req.params.id;
-    await Product.findByIdAndDelete(id);
-    req.flash('error', 'Product deleted successfully');
-    res.redirect('/admin');
+    try {
+        const id = req.params.id;
+        await Product.findByIdAndDelete(id);
+        req.flash('error', 'Product deleted successfully');
+        res.redirect('/admin');
+    } catch (error) {
+        console.error("Error deleting product", error);
+        res.status(500).send("An error occurred while deleting the product.");
+    }
+
 };
 
 GetProducts = async (req, res) => {
-    const products = await Product.find();
-    const messages = req.flash();
-    res.render("admin", { products, messages });
+    try {
+        const products = await Product.find();
+        const messages = req.flash();
+        res.render("admin", { products, messages });
+    } catch (error) {
+        console.error("Error while fetching product", error);
+        res.status(500).send("An error occurred while fetching the product.");
+    }
+
 };
 
 

@@ -1,68 +1,103 @@
 const User = require('../models/user-model');
 const Product = require('../models/product-model');
 const { sendConfirmationEmail } = require('../services/email-service');
-const YOUR_DOMAIN = 'http://localhost:3000'
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 GetDashboard = async (req, res) => {
-    const user = await User.findOne({ email: req.user.email });
-    const products = await Product.find();
-    const messages = req.flash();
-    res.render("mainScreen", { user, products, messages });
+    try {
+        const user = await User.findOne({ email: req.user.email });
+        const products = await Product.find();
+        const messages = req.flash();
+        res.render("mainScreen", { user, products, messages });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+
 };
 
 UserCart = async (req, res) => {
-    const userCart = await User.findOne({ email: req.user.email }).populate('cart');
-    const messages = req.flash();
-    res.render("cartScreen", { userCart, messages });
+    try {
+        const userCart = await User.findOne({ email: req.user.email }).populate('cart');
+        const messages = req.flash();
+        res.render("cartScreen", { userCart, messages });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 };
 
 UserOrder = async (req, res) => {
-    const userOrder = await User.findOne({ email: req.user.email }).populate('orders');
-    res.render("orderScreen", { userOrder });
+    try {
+        const userOrder = await User.findOne({ email: req.user.email }).populate('orders');
+        res.render("orderScreen", { userOrder });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 }
 
 UserAccount = async (req, res) => {
-    const userDetails = await User.findOne({ email: req.user.email });
-    res.render("userAccount", { userDetails });
+    try {
+        const userDetails = await User.findOne({ email: req.user.email });
+        res.render("userAccount", { userDetails });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 }
 
 AddToCart = async (req, res) => {
-    const product = await Product.findById(req.params.id);
-    const user = await User.findOne({ email: req.user.email });
-    user.cart.push(product._id);
-    await user.save();
-    req.flash('success', 'Product added to cart successfully 😇');
-    res.redirect('/user/cart');
+    try {
+        const product = await Product.findById(req.params.id);
+        const user = await User.findOne({ email: req.user.email });
+        user.cart.push(product._id);
+        await user.save();
+        req.flash('success', 'Product added to cart successfully 😇');
+        res.redirect('/user/cart');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 };
 
 RemoveFromCart = async (req, res) => {
-    const productId = req.params.id;
-    const user = await User.findOne({ email: req.user.email });
-    user.cart.pull(productId);
-    await user.save();
-    req.flash('error', 'Product removed from cart');
-    res.redirect('/user/cart');
+    try {
+        const productId = req.params.id;
+        const user = await User.findOne({ email: req.user.email });
+        user.cart.pull(productId);
+        await user.save();
+        req.flash('error', 'Product removed from cart');
+        res.redirect('/user/cart');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 };
 
 ConfirmOrder = async (req, res) => {
-    const product = await Product.findById(req.params.id);
-    const user = await User.findOne({ email: req.user.email });
-    user.orders.push(product._id);
-    user.cart.pull(product._id);
-    await user.save();
-    const orderDetails = [
-        {
-            name: product.name,
-            quantity: 1,
-            price: product.price,
-            orderId: product._id
-        }
-    ];
+    try {
+        const product = await Product.findById(req.params.id);
+        const user = await User.findOne({ email: req.user.email });
+        user.orders.push(product._id);
+        user.cart.pull(product._id);
+        await user.save();
+        const orderDetails = [
+            {
+                name: product.name,
+                quantity: 1,
+                price: product.price,
+                orderId: product._id
+            }
+        ];
 
-    await sendConfirmationEmail(user.email, user.name, orderDetails);
-    req.flash('success', 'Your order has been placed successfully 🎁');
-    res.redirect('/user');
+        await sendConfirmationEmail(user.email, user.name, orderDetails);
+        req.flash('success', 'Your order has been placed successfully 🎁');
+        res.redirect('/user');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 };
 
 Checkout = async (req, res) => {
