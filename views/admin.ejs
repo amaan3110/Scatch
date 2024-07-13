@@ -50,7 +50,8 @@
                                     <h1 class="font-semibold <%= product.textcolor %>">₹ <%= product.price %>
                                     </h1>
                                     <a href="admin/delete/<%= product._id %>"
-                                        class="absolute top-9 right-3 bg-white rounded-full inline-block w-7 h-7 flex justify-center items-center">
+                                        class="absolute top-9 right-3 bg-white rounded-full inline-block w-7 h-7 flex justify-center items-center"
+                                        onclick="confirmDeletion(event, '<%= product.name %>')">
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </div>
@@ -89,6 +90,13 @@
                 </div>
             </div>
         </div>
+        <script>
+            function confirmDeletion(event, productName) {
+            if (!confirm(`Are you sure you want to delete the product "${productName}"?`)) {
+                event.preventDefault();
+            }
+        }
+        </script>
 </body>
 
 </html>
