@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scatch - Premium Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 
 <body class="bg-gray-100">
@@ -13,14 +14,14 @@
     <%- include('./partials/_toast.ejs', { messages }) %>
         <div class="flex flex-col md:flex-row gap-8 md:gap-16 justify-center items-center min-h-screen p-4 md:p-0">
             <!-- Registration Form -->
-            <div class="w-full md:w-1/3 bg-slate-300 p-8 md:px-10 md:py-[13%] rounded-lg shadow-lg">
+            <div class="w-full md:w-1/3 bg-slate-300 p-8 md:px-10 md:py-[13%] rounded-lg shadow-lg animate__animated animate__fadeIn">
                 <div>
                     <h1 class="text-3xl font-semibold tracking-tighter">Welcome to
                         <span class="text-blue-500">Scatch</span>
                     </h1>
                     <p class="text-xl font-semibold mb-4 tracking-tight">Create your account</p>
                 </div>
-                <form action="/register" method="post" class="flex flex-col gap-3">
+                <form action="/register" method="post" class="flex flex-col gap-3 animate__animated animate__fadeInUp">
                     <input type="text" name="username" placeholder="Full Name" class="py-2 px-3 outline-none rounded">
                     <input type="email" name="email" placeholder="Email" class="py-2 px-3 outline-none rounded">
                     <input type="password" name="password" placeholder="Password"
@@ -33,11 +34,11 @@
                 <div class="px-3 py-2 bg-blue-600 rounded-full">or</div>
             </div>
             <!-- Login Form -->
-            <div class="w-full md:w-1/3 bg-white p-8 md:px-10 md:py-[15%] rounded-lg shadow-lg">
+            <div class="w-full md:w-1/3 bg-white p-8 md:px-10 md:py-[15%] rounded-lg shadow-lg animate__animated animate__fadeIn">
                 <div>
                     <h1 class="text-2xl font-semibold tracking-tighter mb-4">Login to your account</h1>
                 </div>
-                <form action="/login" method="post" class="flex flex-col gap-3">
+                <form action="/login" method="post" class="flex flex-col gap-3 animate__animated animate__fadeInUp">
                     <input type="email" name="email" placeholder="Email"
                         class="py-2 px-3 outline-none rounded bg-slate-300">
                     <input type="password" name="password" placeholder="Password"
